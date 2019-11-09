@@ -15,7 +15,7 @@
 </head>
 <body>
     <header>
-        <h1 class="title-area">Phone Repair Booking System</h1>
+        <div class="title-area">Phone Repair Booking System</div>
         <div class="menu-area">
             <div class="menu-btn" onclick="window.location = '/'">Home</div>
             <div class="menu-btn" onclick="window.location = '/extension'">Extension</div>
@@ -24,7 +24,7 @@
     <main>
         <div class="form-layout">
             <div class="customerDetails">
-                <h3>Customer Details</h3>
+                <div class="inner-title">Customer Details</div>
                 <form name="customerForm" action="" method="">
                     <!--Section: Customer Details -->
                     <section>
@@ -85,7 +85,7 @@
                 </form>
             </div>
             <div class="repairDetails">
-                <h3>Repair Details</h3>
+                <div class="inner-title">Repair Details</div>
                 <!--Put all inputs in a form-->
                 <form name="repairForm" action="" method="">
                     <!--Section: Customer Details -->
@@ -131,7 +131,7 @@
                 </form>
             </div>
             <div class="courtesyPhone">
-                <h3>Courtesy Phone</h3>
+                <div class="inner-title">Courtesy Phone</div>
                 <section>
                     <label for="Phonelist">Item type:</label>
                     <select id = "Phonelist">
@@ -146,7 +146,7 @@
                 <br>
             </div>
             <div class="costSection">
-                <h3>Cost Section</h3>
+                <div class="inner-title">Cost Section</div>
                 <section>
                     <label for="Bond">Bond:</label><input type="text" id="Bond" name="bond" disabled>
                     <br>
@@ -160,12 +160,12 @@
                 </section>
             </div>
             <div class="buttonSection">
-                <h3>Button Section</h3>
+                <div class="inner-title">Button Section</div>
                 <!--Section: Buttons section-->
                 <section>
-                    <input type="submit" value="Submit" onclick="formSubmit()">
-                    <input type="reset" value="Reset" id="btnReset" onclick="resetForms()">
-                    <input type="button" value="FAQ" id="faq" onclick="showFaqs()">
+                    <button onclick="formSubmit()">Submit</button>
+                    <button onclick="resetForms()">Reset</button>
+                    <button id="faq" onclick="showFaqs()">FAQ</button>
                 </section>
             </div>
         </div>

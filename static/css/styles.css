@@ -1,5 +1,6 @@
-* {
-
+html, body {
+    margin: 0;
+    padding: 0;
 }
 
 :root {
@@ -17,7 +18,7 @@
 
 header {
     background-color: var(--header-color);
-    min-height: 20vh;
+    min-height: 5%;
     display: block;
     color: white;
     font-weight: bold;
@@ -50,31 +51,43 @@ footer {
 }
 .customerDetails {
     background-color: var(--customer-detail-color);
-    min-height: 30vh;
+    min-height: 80vh;
+    padding-bottom: 10%;
 }
 .repairDetails {
     background-color: var(--repair-detail-color);
-    min-height: 30vh;
+    min-height: 75vh;
+    padding-bottom: 10%;
 
 }
 .courtesyPhone {
     background-color: var(--courtesy-phone-color);
-    min-height: 15vh;
+    min-height: 30vh;
+    padding-bottom: 10%;
+
 }
 .costSection {
     background-color: var(--cost-section-color);
-    min-height: 20vh;
+    min-height: 30vh;
+    padding-bottom: 20%;
+
 }
 .buttonSection {
     background-color: var(--button-section-color);
-    min-height: 5vh;
+    min-height: 10vh;
+
 }
 .menu-btn {
     background-color: var(--courtesy-phone-color);
     max-height: 25px;
+
 }
 .menu-btn:hover {
     background-color: var(--customer-detail-color);
+}
+.title-area {
+    font-size: 2em;
+    padding: 1em;
 }
 
 .form-layout h3 {
@@ -83,8 +96,9 @@ footer {
 }
 .form-layout fieldset {
     margin-left: 1em;
+    margin-right: 1em;
     margin-bottom: 1em;
-    width: 25em;
+
 
 }
 
@@ -96,22 +110,45 @@ footer {
     text-align: left;
     padding-left: 1em;
 }
-.form-layout input textarea {
+.form-layout textarea {
     display: inline-block;
     float: left;
+    width: 400px;
+    height: 50px;
+    padding-left: 1em;
 }
+
+.form-layout input {
+    display: inline-block;
+    float: left;
+    margin-left: 1em;
+    width: 95%;
+}
+ button {
+     margin: 1em;
+ }
 
 table, td {
-  border: 1px solid black;
-    padding: 10px;
-    margin: 5px;
+    border: 1px solid black;
+    padding: 8px;
+    margin: 8px;
 }
+a {
+    padding: 1em;
+    color: coral;
+}
+.inner-title {
+    padding: 1em;
+    font-size: 1.5em;
 
-
+}
 section {
     margin: 0 auto;
 }
 
+form {
+    margin: 0 auto;
+}
 
 @media screen and (min-width: 600px) {
     header nav ul {
@@ -122,9 +159,40 @@ section {
     header nav ul li {
         display: block;
     }
+    .menu-area {
+        grid-area: menu-area;
+        display: grid;
+        grid-template-columns: auto auto;
+    }
 }
 
 @media screen and (min-width: 1025px) {
+    .form-layout input {
+        width: 70%;
+        margin-left: 1em;
+    }
+    .customerDetails {
+        min-height: 30vh;
+        padding-bottom: 5%;
+    }
+    .repairDetails {
+        background-color: var(--repair-detail-color);
+        min-height: 30vh;
+        padding-bottom: 5%;
+
+    }
+    .courtesyPhone {
+        background-color: var(--courtesy-phone-color);
+        min-height: 15vh;
+        padding-bottom: 5%;
+
+    }
+    .costSection {
+        background-color: var(--cost-section-color);
+        min-height: 20vh;
+        padding-bottom: 5%;
+
+    }
     header {
         display: grid;
         grid-template-areas: 'title-area title-area menu-area';
