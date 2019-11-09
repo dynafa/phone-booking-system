@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced JavaScript Features</title>
+    <style>
+        #map {
+            height: 50%;
+            width: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .cont {
+            padding: 2em;
+        }
+
+        #drop-area {
+            border: 2px dashed #ccc;
+            border-radius: 20px;
+            width: 480px;
+            font-family: sans-serif;
+            margin: 100px auto;
+            padding: 20px;
+        }
+        #drop-area.highlight {
+            border-color: purple;
+        }
+        p {
+            margin-top: 0;
+        }
+        .my-form {
+            margin-bottom: 10px;
+        }
+        #gallery {
+            margin-top: 10px;
+        }
+        #gallery img {
+            width: 150px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px;
+            background: #ccc;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .button:hover {
+            background: #ddd;
+        }
+        #fileElem {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <h1>Statement of authenticity</h1>
+        <p> I confirm that:This is an original assessment and is entirely my own work.</p>
+        <p>It contains no material previously published or written by another person or myself except where due acknowledgement is made in the text.</p>
+        <p>No  material  which  to  a  substantial  extent,  has  been  submitted  for  any  other  academic  course,  is  included without acknowledgement</p>
+    </div>
+    <div id="map"></div>
+    <div id="drop-area">
+        <!--https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/-->
+        <form class="my-form">
+            <p>Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
+            <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
+            <label class="button" for="fileElem">Select some files</label><br>
+            <progress id="progress-bar" max=100 value=0></progress>
+        </form>
+    </div>
+    <div id="gallery"></div>
+<!--https://developers.google.com/maps/documentation/javascript/places-autocomplete-->
+<!--https://developers-dot-devsite-v2-prod.appspot.com/maps/documentation/javascript/examples/places-autocomplete-addressform-->
+
+    <script>
+
+        function initMap() {
+            var myLatLng = {lat: -39.5467696, lng: 176.8402729};
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
+
+
+        // ************************ Drag and drop ***************** //
+        let dropArea = document.getElementById("drop-area")
+
+// Prevent default drag behaviors
+        ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false)
+            document.body.addEventListener(eventName, preventDefaults, false)
+        })
+
+// Highlight drop area when item is dragged over it
+        ;['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        })
+
+        ;['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        })
+
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function preventDefaults (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(e) {
+            dropArea.classList.add('highlight');
+        }
+
+        function unhighlight(e) {
+            dropArea.classList.remove('active');
+        }
+
+        function handleDrop(e) {
+            var dt = e.dataTransfer;
+            var files = dt.files;
+
+            handleFiles(files);
+        }
+
+        let uploadProgress = [];
+        let progressBar = document.getElementById('progress-bar');
+
+        function initializeProgress(numFiles) {
+            progressBar.value = 0;
+            uploadProgress = [];
+
+            for(let i = numFiles; i > 0; i--) {
+                uploadProgress.push(0);
+            }
+        }
+
+        function updateProgress(fileNumber, percent) {
+            uploadProgress[fileNumber] = percent;
+            let total = uploadProgress.reduce((tot, curr) => tot + curr, 0) / uploadProgress.length;
+            console.debug('update', fileNumber, percent, total);
+            progressBar.value = total;
+        }
+
+        function handleFiles(files) {
+            files = [...files];
+            initializeProgress(files.length);
+            files.forEach(uploadFile);
+            files.forEach(previewFile);
+        }
+
+        function previewFile(file) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = function() {
+                let img = document.createElement('img');
+                img.src = reader.result;
+                img.onclick = "window.open(this.src, '_blank');";
+                document.getElementById('gallery').appendChild(img)
+            }
+        }
+
+        function uploadFile(file, i) {
+            var url = '../static/';
+            var xhr = new XMLHttpRequest();
+            var formData = new FormData();
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+            // Update progress (can be used to show progress indicator)
+            xhr.upload.addEventListener("progress", function(e) {
+                updateProgress(i, (e.loaded * 100.0 / e.total) || 100);
+            });
+
+            xhr.addEventListener('readystatechange', function(e) {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    updateProgress(i, 100); // <- Add this
+                }
+                else if (xhr.readyState == 4 && xhr.status != 200) {
+                    // Error. Inform the user
+                }
+            });
+
+            formData.append('upload_preset', 'ujpu6gyk');
+            formData.append('file', file);
+            xhr.send(formData);
+        }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2DRXWoCd0FKEyBnZ3N9oOR0ueS4K8OjU&callback=initMap">
+    </script>
+</body>
+</html>

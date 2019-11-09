@@ -1,0 +1,58 @@
+header {
+    height: 20vh;
+    background-color: #707070;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+header h1 {
+    padding-left: 2em;
+}
+
+header h3 {
+    float: left;
+    font-size: 2em;
+
+}
+
+footer {
+    min-width: 3em;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3em;
+}
+.courtesyPhone table {
+    border: 1px solid black;
+    padding: 10px;
+    margin: 5px;
+}
+
+.customerDetails  {
+    padding: 2em;
+}
+.Totals {
+    padding: 2em
+}
+
+.repairDetails {
+    padding: 2em;
+}
+.container1 {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.repairJobdetails {
+   padding: 2em;
+}
+
+@media screen and (min-width: 600px) {
+}
+@media screen and (min-width: 1025px) {
+    body {
+        max-width: 60vw;
+        margin: 0 auto;
+    }
+
+}
